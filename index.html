@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painter's Algorithm WebGL</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/gl-matrix@3/gl-matrix.js"></script>
+    
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec3 aPosition;
+        attribute vec4 aColor; // New attribute for color
+        varying vec4 vColor;   // Pass color to fragment shader
+        uniform mat4 uModelViewProjectionMatrix;
+        
+        void main() {
+            vColor = aColor;  // Assign color to the varying variable
+            gl_Position = uModelViewProjectionMatrix * vec4(aPosition, 1.0);
+        }                  
+    </script>
+    
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float;
+
+        varying vec4 vColor; // Receive color from the vertex shader
+        
+        void main() {
+            gl_FragColor = vColor; // Apply the received color directly
+        }            
+    </script>
+
+    <script src="script.js"></script>
+    <style>
+        canvas { display: block; }
+    </style>
+</head>
+
+<body>
+    <canvas id="webgl-canvas" width="800" height="600"></canvas>
+</body>
+</html>
